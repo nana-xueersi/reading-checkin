@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>阅读打卡 · 阅读小能手</title>
+<style>
+  :root {
+    --primary: #7C5CBF;
+    --primary-light: #A07FD9;
+    --accent: #F5A623;
+    --star: #FFD700;
+    --moon: #F5A623;
+    --bg: #F4F0FA;
+    --card: #FFFFFF;
+    --text: #2D2D2D;
+    --sub: #888;
+    --red: #FF6B6B;
+    --green: #4CAF50;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'PingFang SC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── 顶部导航 ── */
+  .nav { background: var(--primary); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  .nav-title { font-size: 17px; font-weight: 700; }
+  .nav-right { font-size: 13px; opacity: .85; cursor: pointer; }
+
+  /* ── 页面容器 ── */
+  .page { display: none; padding: 16px; max-width: 480px; margin: 0 auto; padding-bottom: 80px; }
+  .page.active { display: block; }
+
+  /* ── 卡片 ── */
+  .card { background: var(--card); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+
+  /* ── 按钮 ── */
+  .btn { display: block; width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: .15s; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:active { background: var(--primary-light); }
+  .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+  .btn-sm { display: inline-block; width: auto; padding: 6px 14px; font-size: 13px; border-radius: 8px; }
+  .btn-danger { background: #FF6B6B; color: #fff; }
+
+  /* ── 输入框 ── */
+  .input-group { margin-bottom: 14px; }
+  .input-group label { font-size: 13px; color: var(--sub); margin-bottom: 6px; display: block; }
+  .input-group input { width: 100%; padding: 12px 14px; border: 1.5px solid #E0D9F0; border-radius: 10px; font-size: 15px; outline: none; transition: border .2s; }
+  .input-group input:focus { border-color: var(--primary); }
+
+  /* ── 登录页 ── */
+  #page-login { padding-top: 60px; }
+  .login-logo { text-align: center; margin-bottom: 32px; }
+  .login-logo .emoji { font-size: 64px; }
+  .login-logo h1 { font-size: 22px; color: var(--primary); margin-top: 10px; font-weight: 700; }
+  .login-logo p { font-size: 13px; color: var(--sub); margin-top: 6px; }
+  .admin-entry { text-align: center; margin-top: 20px; font-size: 13px; color: var(--sub); cursor: pointer; }
+  .admin-entry span { color: var(--primary); }
+
+  /* ── 星星月亮展示 ── */
+  .stars-display { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .star-icon { font-size: 24px; }
+  .moon-icon { font-size: 28px; }
+
+  /* ── 称号徽章 ── */
+  .badge { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #7C5CBF, #A07FD9); color: #fff; border-radius: 20px; padding: 6px 14px; font-size: 14px; font-weight: 600; }
+
+  /* ── 进度条 ── */
+  .progress-bar { background: #EEE; border-radius: 8px; height: 10px; overflow: hidden; margin: 8px 0; }
+  .progress-fill { background: linear-gradient(90deg, var(--primary), var(--primary-light)); height: 100%; border-radius: 8px; transition: width .4s; }
+
+  /* ── 周次打卡格子 ── */
+  .weeks-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0; }
+  .week-cell { text-align: center; padding: 10px 6px; border-radius: 12px; border: 2px solid #E0D9F0; background: #FAF8FF; }
+  .week-cell.done { border-color: var(--star); background: #FFFBF0; }
+  .week-cell.done .wc-star { opacity: 1; }
+  .week-cell .wc-label { font-size: 11px; color: var(--sub); margin-bottom: 4px; }
+  .week-cell .wc-star { font-size: 22px; opacity: .25; }
+
+  /* ── 打卡区域 ── */
+  .checkin-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .checkin-opt { border: 2px solid #E0D9F0; border-radius: 12px; padding: 16px 10px; text-align: center; cursor: pointer; background: #FAF8FF; transition: .15s; }
+  .checkin-opt:active, .checkin-opt.selected { border-color: var(--primary); background: #F0EAFA; }
+  .checkin-opt .co-icon { font-size: 30px; margin-bottom: 6px; }
+  .checkin-opt .co-label { font-size: 13px; color: var(--text); font-weight: 500; }
+  .checkin-full { border: 2px solid #E0D9F0; border-radius: 12px; padding: 14px; text-align: center; cursor: pointer; background: #FAF8FF; margin-bottom: 14px; transition: .15s; }
+  .checkin-full:active, .checkin-full.selected { border-color: var(--green); background: #F0FAF0; }
+  #file-input { display: none; }
+  #preview-img { max-width: 100%; border-radius: 10px; margin-bottom: 10px; display: none; }
+  #preview-video { max-width: 100%; border-radius: 10px; margin-bottom: 10px; display: none; }
+
+  /* ── 排行榜 ── */
+  .rank-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F0EAF8; }
+  .rank-item:last-child { border-bottom: none; }
+  .rank-num { width: 28px; height: 28px; border-radius: 50%; background: #EEE; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .rank-num.r1 { background: #FFD700; color: #fff; }
+  .rank-num.r2 { background: #C0C0C0; color: #fff; }
+  .rank-num.r3 { background: #CD7F32; color: #fff; }
+  .rank-info { flex: 1; }
+  .rank-name { font-size: 15px; font-weight: 600; }
+  .rank-score { font-size: 12px; color: var(--sub); margin-top: 2px; }
+  .rank-icons { font-size: 16px; }
+  .like-btn { background: none; border: 1.5px solid #E0D9F0; border-radius: 20px; padding: 4px 10px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: .15s; flex-shrink: 0; }
+  .like-btn.liked { border-color: var(--red); color: var(--red); background: #FFF0F0; }
+
+  /* ── 老师端 ── */
+  .teacher-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .teacher-table th { background: var(--bg); padding: 8px 6px; text-align: left; font-weight: 600; color: var(--sub); }
+  .teacher-table td { padding: 8px 6px; border-bottom: 1px solid #F0EAF8; vertical-align: middle; }
+  .star-adj { display: flex; align-items: center; gap: 4px; }
+  .adj-btn { width: 24px; height: 24px; border: none; border-radius: 6px; background: #EEE; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+  .adj-btn:active { background: var(--primary); color: #fff; }
+  .star-count { min-width: 20px; text-align: center; font-weight: 600; }
+
+  /* ── 底部Tab ── */
+  .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #EEE; display: flex; z-index: 100; max-width: 480px; margin: 0 auto; }
+  .tab-item { flex: 1; padding: 10px 0 8px; text-align: center; cursor: pointer; color: var(--sub); transition: .15s; }
+  .tab-item.active { color: var(--primary); }
+  .tab-item .ti-icon { font-size: 22px; }
+  .tab-item .ti-label { font-size: 11px; margin-top: 2px; }
+
+  /* ── 提示Toast ── */
+  #toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(.9); background: rgba(0,0,0,.75); color: #fff; padding: 10px 20px; border-radius: 10px; font-size: 14px; opacity: 0; pointer-events: none; transition: .2s; z-index: 999; }
+  #toast.show { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+
+  /* ── 弹窗 ── */
+  .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+  .modal-mask.show { display: flex; }
+  .modal-box { background: #fff; border-radius: 20px 20px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 480px; }
+  .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 16px; }
+
+  /* ── 欢迎动画 ── */
+  @keyframes popIn { from { transform: scale(.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .pop-in { animation: popIn .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+  .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--primary); }
+  .sub-text { font-size: 13px; color: var(--sub); line-height: 1.6; }
+  .divider { height: 1px; background: #F0EAF8; margin: 14px 0; }
+
+  /* 当前周高亮 */
+  .current-week-label { font-size: 12px; color: var(--primary); font-weight: 600; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="nav" id="main-nav" style="display:none;">
+  <div class="nav-title">📚 阅读打卡</div>
+  <div class="nav-right" id="nav-user-info"></div>
+</div>
+
+<!-- ══════════════ 登录页 ══════════════ -->
+<div class="page active" id="page-login">
+  <div class="login-logo">
+    <div class="emoji">📚</div>
+    <h1>阅读小能手</h1>
+    <p>8周阅读打卡，解锁专属称号！</p>
+  </div>
+  <div class="card">
+    <div class="input-group">
+      <label>购课手机号</label>
+      <input type="tel" id="login-phone" placeholder="请输入手机号" maxlength="11">
+    </div>
+    <div class="input-group">
+      <label>孩子姓名</label>
+      <input type="text" id="login-name" placeholder="请输入孩子姓名">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">进入我的阅读</button>
+  </div>
+  <div class="admin-entry" onclick="showAdminLogin()">老师入口 <span>→</span></div>
+</div>
+
+<!-- ══════════════ 学生主页 ══════════════ -->
+<div class="page" id="page-home">
+  <div class="card" style="background: linear-gradient(135deg,#7C5CBF,#A07FD9); color:#fff;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+      <div style="font-size:40px;">🌟</div>
+      <div>
+        <div style="font-size:18px;font-weight:700;" id="home-name">小读者</div>
+        <div id="home-badge" style="margin-top:4px;"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;">
+      <div style="text-align:center;">
+        <div style="font-size:28px;font-weight:800;" id="home-stars">0</div>
+        <div style="font-size:12px;opacity:.85;">⭐ 星星</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:28px;font-weight:800;" id="home-moons">0</div>
+        <div style="font-size:12px;opacity:.85;">🌙 月亮</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:28px;font-weight:800;" id="home-weeks">0/8</div>
+        <div style="font-size:12px;opacity:.85;">📅 完成周</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">8周阅读进度</div>
+    <div class="weeks-grid" id="weeks-grid"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">本周打卡</div>
+    <div id="checkin-area"></div>
+  </div>
+</div>
+
+<!-- ══════════════ 排行榜页 ══════════════ -->
+<div class="page" id="page-rank">
+  <div class="card">
+    <div class="section-title">🏆 排行榜</div>
+    <p class="sub-text" style="margin-bottom:12px;">星星+月亮最多的小读者</p>
+    <div id="rank-list"></div>
+  </div>
+</div>
+
+<!-- ══════════════ 老师端页 ══════════════ -->
+<div class="page" id="page-teacher">
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div class="section-title" style="margin-bottom:0;">📋 学生数据</div>
+      <button class="btn btn-sm btn-outline" onclick="exportCSV()">导出CSV</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="teacher-table" id="teacher-table">
+        <thead>
+          <tr>
+            <th>姓名</th>
+            <th>手机号</th>
+            <th>⭐</th>
+            <th>调整</th>
+            <th>完成周</th>
+          </tr>
+        </thead>
+        <tbody id="teacher-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <button class="btn btn-danger" onclick="adminLogout()">退出老师模式</button>
+  </div>
+</div>
+
+<!-- ══════════════ 底部Tab ══════════════ -->
+<div class="tab-bar" id="tab-bar" style="display:none;">
+  <div class="tab-item active" id="tab-home" onclick="switchTab('home')">
+    <div class="ti-icon">🏠</div>
+    <div class="ti-label">我的</div>
+  </div>
+  <div class="tab-item" id="tab-rank" onclick="switchTab('rank')">
+    <div class="ti-icon">🏆</div>
+    <div class="ti-label">排行榜</div>
+  </div>
+</div>
+
+<!-- ══════════════ 老师登录弹窗 ══════════════ -->
+<div class="modal-mask" id="admin-modal">
+  <div class="modal-box">
+    <div class="modal-title">🔐 老师入口</div>
+    <div class="input-group">
+      <label>管理员密码</label>
+      <input type="password" id="admin-pwd" placeholder="请输入密码">
+    </div>
+    <button class="btn btn-primary" onclick="doAdminLogin()" style="margin-bottom:10px;">进入管理</button>
+    <button class="btn btn-outline" onclick="closeAdminModal()">取消</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  常量配置
+// ══════════════════════════════════════════
+const TOTAL_WEEKS = 8;
+const ADMIN_PASSWORD = 'nana2026';  // 老师密码，可修改
+const STARS_PER_MOON = 4;
+
+const TITLES = [
+  { min: 0,  title: '阅读新芽 🌱', emoji: '🌱' },
+  { min: 1,  title: '阅读小能手 ⭐', emoji: '⭐' },
+  { min: 3,  title: '故事小达人 📖', emoji: '📖' },
+  { min: 5,  title: '阅读小勇士 🗡️', emoji: '🗡️' },
+  { min: 6,  title: '故事小冠军 🏆', emoji: '🏆' },
+  { min: 8,  title: '阅读大明星 🌟', emoji: '🌟' },
+];
+
+function getTitle(stars) {
+  let t = TITLES[0];
+  for (const item of TITLES) { if (stars >= item.min) t = item; }
+  return t;
+}
+
+// ══════════════════════════════════════════
+//  数据层（localStorage）
+// ══════════════════════════════════════════
+const KEY_USERS = 'rci_users';       // { phone+name: { phone, name, stars, checkins:[], likes:{} } }
+const KEY_CURRENT = 'rci_current';   // { phone, name }
+const KEY_IS_ADMIN = 'rci_admin';    // bool
+
+function getUsers() { return JSON.parse(localStorage.getItem(KEY_USERS) || '{}'); }
+function saveUsers(u) { localStorage.setItem(KEY_USERS, JSON.stringify(u)); }
+function userKey(phone, name) { return phone.trim() + '_' + name.trim(); }
+
+function getUser(phone, name) {
+  const users = getUsers();
+  return users[userKey(phone, name)] || null;
+}
+
+function upsertUser(phone, name) {
+  const users = getUsers();
+  const k = userKey(phone, name);
+  if (!users[k]) {
+    users[k] = { phone: phone.trim(), name: name.trim(), stars: 0, checkins: [], likes: {} };
+  }
+  saveUsers(users);
+  return users[k];
+}
+
+function updateUser(phone, name, data) {
+  const users = getUsers();
+  const k = userKey(phone, name);
+  if (!users[k]) return;
+  Object.assign(users[k], data);
+  saveUsers(users);
+}
+
+function getCurrentUser() {
+  const c = localStorage.getItem(KEY_CURRENT);
+  if (!c) return null;
+  const { phone, name } = JSON.parse(c);
+  return getUser(phone, name) || null;
+}
+
+function setCurrentUser(phone, name) {
+  localStorage.setItem(KEY_CURRENT, JSON.stringify({ phone, name }));
+}
+
+// ══════════════════════════════════════════
+//  Toast
+// ══════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ══════════════════════════════════════════
+//  登录
+// ══════════════════════════════════════════
+function doLogin() {
+  const phone = document.getElementById('login-phone').value.trim();
+  const name = document.getElementById('login-name').value.trim();
+  if (!/^1\d{10}$/.test(phone)) { showToast('请输入正确的手机号'); return; }
+  if (!name) { showToast('请输入孩子姓名'); return; }
+  upsertUser(phone, name);
+  setCurrentUser(phone, name);
+  enterStudentMode();
+}
+
+function enterStudentMode() {
+  const u = getCurrentUser();
+  if (!u) return;
+  document.getElementById('page-login').classList.remove('active');
+  document.getElementById('main-nav').style.display = 'flex';
+  document.getElementById('tab-bar').style.display = 'flex';
+  document.getElementById('nav-user-info').textContent = u.name;
+  switchTab('home');
+}
+
+// ══════════════════════════════════════════
+//  Tab切换
+// ══════════════════════════════════════════
+function switchTab(tab) {
+  ['home','rank'].forEach(t => {
+    document.getElementById('page-' + t).classList.remove('active');
+    document.getElementById('tab-' + t).classList.remove('active');
+  });
+  document.getElementById('page-' + tab).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (tab === 'home') renderHome();
+  if (tab === 'rank') renderRank();
+}
+
+// ══════════════════════════════════════════
+//  主页渲染
+// ══════════════════════════════════════════
+function renderHome() {
+  const u = getCurrentUser();
+  if (!u) return;
+
+  const totalStars = u.stars;
+  const moons = Math.floor(totalStars / STARS_PER_MOON);
+  const remainStars = totalStars % STARS_PER_MOON;
+  const weeksCount = (u.checkins || []).length;
+  const title = getTitle(totalStars);
+
+  document.getElementById('home-name').textContent = u.name;
+  document.getElementById('home-stars').textContent = remainStars;
+  document.getElementById('home-moons').textContent = moons;
+  document.getElementById('home-weeks').textContent = weeksCount + '/8';
+
+  const badgeEl = document.getElementById('home-badge');
+  badgeEl.innerHTML = `<span style="background:rgba(255,255,255,.25);border-radius:20px;padding:3px 10px;font-size:13px;">${title.title}</span>`;
+
+  // 周格子
+  const grid = document.getElementById('weeks-grid');
+  grid.innerHTML = '';
+  for (let i = 1; i <= TOTAL_WEEKS; i++) {
+    const done = (u.checkins || []).includes(i);
+    const isCurrent = (i === getCurrentWeek());
+    const cell = document.createElement('div');
+    cell.className = 'week-cell' + (done ? ' done' : '');
+    cell.innerHTML = `<div class="wc-label">第${i}周</div><div class="wc-star">⭐</div>${isCurrent && !done ? '<div class="current-week-label">本周</div>' : ''}`;
+    grid.appendChild(cell);
+  }
+
+  // 打卡区域
+  renderCheckinArea(u);
+}
+
+function getCurrentWeek() {
+  // 以第1次打卡时间为基准，或者返回1（首次）
+  // 简化：返回已完成周数+1，最大8
+  const u = getCurrentUser();
+  if (!u) return 1;
+  const done = (u.checkins || []).length;
+  return Math.min(done + 1, TOTAL_WEEKS);
+}
+
+// ══════════════════════════════════════════
+//  打卡区域
+// ══════════════════════════════════════════
+let selectedCheckinType = null;
+let selectedFile = null;
+
+function renderCheckinArea(u) {
+  const currentWeek = getCurrentWeek();
+  const alreadyDone = (u.checkins || []).includes(currentWeek);
+  const area = document.getElementById('checkin-area');
+
+  if (u.checkins && u.checkins.length >= TOTAL_WEEKS) {
+    area.innerHTML = `<div style="text-align:center;padding:20px;"><div style="font-size:48px;">🎉</div><div style="font-size:16px;font-weight:700;color:var(--primary);margin-top:8px;">8周全部完成！</div><div class="sub-text" style="margin-top:6px;">你是真正的阅读大明星！</div></div>`;
+    return;
+  }
+
+  if (alreadyDone) {
+    area.innerHTML = `<div style="text-align:center;padding:16px;"><div style="font-size:36px;">✅</div><div style="font-size:15px;font-weight:600;color:var(--green);margin-top:8px;">第${currentWeek}周已打卡！</div><div class="sub-text" style="margin-top:6px;">下周继续加油 💪</div></div>`;
+    return;
+  }
+
+  area.innerHTML = `
+    <p class="sub-text" style="margin-bottom:12px;">第 <strong style="color:var(--primary)">${currentWeek}</strong> 周打卡，选择方式：</p>
+    <div class="checkin-options">
+      <div class="checkin-opt" id="opt-photo" onclick="selectCheckinType('photo')">
+        <div class="co-icon">📷</div>
+        <div class="co-label">拍照打卡</div>
+      </div>
+      <div class="checkin-opt" id="opt-video" onclick="selectCheckinType('video')">
+        <div class="co-icon">🎬</div>
+        <div class="co-label">上传视频</div>
+      </div>
+    </div>
+    <div class="checkin-full" id="opt-tick" onclick="selectCheckinType('tick')">
+      <div style="font-size:24px;">☑️</div>
+      <div style="font-size:14px;font-weight:500;margin-top:4px;">直接勾选：本周读书已完成</div>
+    </div>
+    <input type="file" id="file-input" accept="image/*,video/*" onchange="onFileSelected(this)">
+    <img id="preview-img" src="" alt="">
+    <video id="preview-video" controls></video>
+    <button class="btn btn-primary" onclick="submitCheckin()">提交打卡 ⭐</button>
+  `;
+  selectedCheckinType = null;
+  selectedFile = null;
+}
+
+function selectCheckinType(type) {
+  selectedCheckinType = type;
+  ['photo','video','tick'].forEach(t => {
+    const el = document.getElementById('opt-' + t);
+    if (el) el.classList.toggle('selected', t === type);
+  });
+  if (type === 'photo') {
+    const fi = document.getElementById('file-input');
+    fi.accept = 'image/*';
+    fi.click();
+  } else if (type === 'video') {
+    const fi = document.getElementById('file-input');
+    fi.accept = 'video/*';
+    fi.click();
+  }
+}
+
+function onFileSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  selectedFile = file;
+  const isImage = file.type.startsWith('image/');
+  const imgEl = document.getElementById('preview-img');
+  const vidEl = document.getElementById('preview-video');
+  const url = URL.createObjectURL(file);
+  if (isImage) {
+    imgEl.src = url; imgEl.style.display = 'block';
+    vidEl.style.display = 'none';
+  } else {
+    vidEl.src = url; vidEl.style.display = 'block';
+    imgEl.style.display = 'none';
+  }
+}
+
+function submitCheckin() {
+  if (!selectedCheckinType) { showToast('请选择打卡方式'); return; }
+  if ((selectedCheckinType === 'photo' || selectedCheckinType === 'video') && !selectedFile) {
+    showToast('请先选择文件'); return;
+  }
+  const u = getCurrentUser();
+  if (!u) return;
+  const week = getCurrentWeek();
+  const checkins = u.checkins || [];
+  if (checkins.includes(week)) { showToast('本周已打卡'); return; }
+  checkins.push(week);
+  const newStars = u.stars + 1;
+  updateUser(u.phone, u.name, { checkins, stars: newStars });
+  showToast('🎉 打卡成功！获得一颗⭐');
+  setTimeout(() => renderHome(), 500);
+}
+
+// ══════════════════════════════════════════
+//  排行榜
+// ══════════════════════════════════════════
+function renderRank() {
+  const u = getCurrentUser();
+  const users = getUsers();
+  const list = Object.values(users).sort((a, b) => b.stars - a.stars);
+  const container = document.getElementById('rank-list');
+  if (!list.length) { container.innerHTML = '<p class="sub-text" style="text-align:center;padding:20px;">暂无数据</p>'; return; }
+
+  container.innerHTML = '';
+  list.forEach((item, idx) => {
+    const rank = idx + 1;
+    const moons = Math.floor(item.stars / STARS_PER_MOON);
+    const stars = item.stars % STARS_PER_MOON;
+    const title = getTitle(item.stars);
+    const isSelf = u && item.phone === u.phone && item.name === u.name;
+    const likedKey = `${item.phone}_${item.name}`;
+    const likedByMe = u ? !!(u.likes && u.likes[likedKey]) : false;
+    const likeCount = item.likedBy ? Object.keys(item.likedBy).length : 0;
+
+    const div = document.createElement('div');
+    div.className = 'rank-item';
+    div.style.background = isSelf ? '#FAF8FF' : '';
+    div.innerHTML = `
+      <div class="rank-num ${rank===1?'r1':rank===2?'r2':rank===3?'r3':''}">${rank}</div>
+      <div class="rank-info">
+        <div class="rank-name">${item.name} ${isSelf ? '<span style="font-size:11px;color:var(--primary);">(我)</span>' : ''}</div>
+        <div class="rank-score">${title.emoji} ${title.title}</div>
+        <div class="rank-icons" style="margin-top:4px;">${'🌙'.repeat(moons)}${'⭐'.repeat(stars)}</div>
+      </div>
+      <button class="like-btn ${likedByMe ? 'liked' : ''}" onclick="toggleLike('${item.phone}','${item.name}')">
+        ❤️ <span id="lc-${likedKey}">${likeCount}</span>
+      </button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleLike(targetPhone, targetName) {
+  const u = getCurrentUser();
+  if (!u) { showToast('请先登录'); return; }
+  if (u.phone === targetPhone && u.name === targetName) { showToast('不能给自己点赞哦'); return; }
+
+  const users = getUsers();
+  const myKey = userKey(u.phone, u.name);
+  const targetKey = userKey(targetPhone, targetName);
+
+  const me = users[myKey];
+  const target = users[targetKey];
+  if (!me || !target) return;
+
+  if (!me.likes) me.likes = {};
+  if (!target.likedBy) target.likedBy = {};
+
+  const likedKey = `${targetPhone}_${targetName}`;
+  if (me.likes[likedKey]) {
+    delete me.likes[likedKey];
+    delete target.likedBy[myKey];
+    showToast('已取消点赞');
+  } else {
+    me.likes[likedKey] = 1;
+    target.likedBy[myKey] = 1;
+    showToast('❤️ 点赞成功！');
+  }
+  saveUsers(users);
+  renderRank();
+}
+
+// ══════════════════════════════════════════
+//  老师端
+// ══════════════════════════════════════════
+function showAdminLogin() {
+  document.getElementById('admin-modal').classList.add('show');
+  document.getElementById('admin-pwd').value = '';
+}
+function closeAdminModal() {
+  document.getElementById('admin-modal').classList.remove('show');
+}
+function doAdminLogin() {
+  const pwd = document.getElementById('admin-pwd').value;
+  if (pwd !== ADMIN_PASSWORD) { showToast('密码错误'); return; }
+  localStorage.setItem(KEY_IS_ADMIN, '1');
+  closeAdminModal();
+  enterTeacherMode();
+}
+function enterTeacherMode() {
+  document.getElementById('page-login').classList.remove('active');
+  document.getElementById('main-nav').style.display = 'flex';
+  document.getElementById('nav-user-info').textContent = '老师模式';
+  document.getElementById('tab-bar').style.display = 'none';
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-rank').classList.remove('active');
+  document.getElementById('page-teacher').classList.add('active');
+  renderTeacherTable();
+}
+function adminLogout() {
+  localStorage.removeItem(KEY_IS_ADMIN);
+  document.getElementById('main-nav').style.display = 'none';
+  document.getElementById('page-teacher').classList.remove('active');
+  document.getElementById('page-login').classList.add('active');
+}
+
+function renderTeacherTable() {
+  const users = getUsers();
+  const list = Object.values(users).sort((a, b) => b.stars - a.stars);
+  const tbody = document.getElementById('teacher-tbody');
+  tbody.innerHTML = '';
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--sub);">暂无学生数据</td></tr>';
+    return;
+  }
+  list.forEach(item => {
+    const tr = document.createElement('tr');
+    const weeksCount = (item.checkins || []).length;
+    tr.innerHTML = `
+      <td><strong>${item.name}</strong></td>
+      <td style="color:var(--sub);font-size:12px;">${item.phone}</td>
+      <td><span style="font-weight:700;color:var(--primary);">${item.stars}</span></td>
+      <td>
+        <div class="star-adj">
+          <button class="adj-btn" onclick="adjustStar('${item.phone}','${item.name}',-1)">−</button>
+          <span class="star-count">${item.stars}</span>
+          <button class="adj-btn" onclick="adjustStar('${item.phone}','${item.name}',1)">+</button>
+        </div>
+      </td>
+      <td>${weeksCount}/8</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function adjustStar(phone, name, delta) {
+  const users = getUsers();
+  const k = userKey(phone, name);
+  if (!users[k]) return;
+  users[k].stars = Math.max(0, (users[k].stars || 0) + delta);
+  saveUsers(users);
+  renderTeacherTable();
+}
+
+function exportCSV() {
+  const users = getUsers();
+  const list = Object.values(users);
+  if (!list.length) { showToast('暂无数据'); return; }
+  const header = ['姓名','手机号','星星数','完成周数','称号'];
+  const rows = list.map(u => [
+    u.name, u.phone, u.stars,
+    (u.checkins || []).length,
+    getTitle(u.stars).title
+  ]);
+  const csv = [header, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = '阅读打卡数据.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ══════════════════════════════════════════
+//  初始化：自动登录
+// ══════════════════════════════════════════
+window.onload = function () {
+  // 老师模式
+  if (localStorage.getItem(KEY_IS_ADMIN)) {
+    enterTeacherMode(); return;
+  }
+  // 学生模式
+  const c = localStorage.getItem(KEY_CURRENT);
+  if (c) {
+    const { phone, name } = JSON.parse(c);
+    if (getUser(phone, name)) { enterStudentMode(); return; }
+  }
+  // 未登录
+};
+</script>
+</body>
+</html>
