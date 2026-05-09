@@ -145,7 +145,10 @@
 <!-- 顶部导航 -->
 <div class="nav" id="main-nav" style="display:none;">
   <div class="nav-title">📚 阅读打卡</div>
-  <div class="nav-right" id="nav-user-info"></div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <span id="nav-user-info" style="font-size:13px;opacity:.85;"></span>
+    <span id="nav-switch-btn" onclick="switchAccount()" style="font-size:12px;opacity:.75;cursor:pointer;background:rgba(255,255,255,.2);padding:3px 9px;border-radius:20px;white-space:nowrap;">切换账号</span>
+  </div>
 </div>
 
 <!-- ══════════════ 登录页 ══════════════ -->
@@ -625,6 +628,17 @@ function enterTeacherMode() {
   document.getElementById('page-rank').classList.remove('active');
   document.getElementById('page-teacher').classList.add('active');
   renderTeacherTable();
+}
+function switchAccount() {
+  if (!confirm('确定要切换账号吗？\n（当前打卡数据已保存，不会丢失）')) return;
+  localStorage.removeItem(KEY_CURRENT);
+  // 隐藏主界面，回到登录页
+  document.getElementById('main-nav').style.display = 'none';
+  document.getElementById('tab-bar').style.display = 'none';
+  ['home','rank','teacher'].forEach(p => {
+    document.getElementById('page-' + p).classList.remove('active');
+  });
+  document.getElementById('page-login').classList.add('active');
 }
 function adminLogout() {
   localStorage.removeItem(KEY_IS_ADMIN);
