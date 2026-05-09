@@ -24,10 +24,9 @@
   /* ── 顶部导航 ── */
   .nav { background: var(--primary); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
   .nav-title { font-size: 17px; font-weight: 700; }
-  .nav-right { font-size: 13px; opacity: .85; cursor: pointer; }
 
   /* ── 页面容器 ── */
-  .page { display: none; padding: 16px; max-width: 480px; margin: 0 auto; padding-bottom: 80px; }
+  .page { display: none; padding: 16px; max-width: 520px; margin: 0 auto; padding-bottom: 90px; }
   .page.active { display: block; }
 
   /* ── 卡片 ── */
@@ -36,52 +35,48 @@
   /* ── 按钮 ── */
   .btn { display: block; width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: .15s; }
   .btn-primary { background: var(--primary); color: #fff; }
-  .btn-primary:active { background: var(--primary-light); }
+  .btn-primary:active { opacity: .85; }
   .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
   .btn-sm { display: inline-block; width: auto; padding: 6px 14px; font-size: 13px; border-radius: 8px; }
   .btn-danger { background: #FF6B6B; color: #fff; }
+  .btn-warn { background: #FF9800; color: #fff; }
 
   /* ── 输入框 ── */
   .input-group { margin-bottom: 14px; }
   .input-group label { font-size: 13px; color: var(--sub); margin-bottom: 6px; display: block; }
-  .input-group input { width: 100%; padding: 12px 14px; border: 1.5px solid #E0D9F0; border-radius: 10px; font-size: 15px; outline: none; transition: border .2s; }
-  .input-group input:focus { border-color: var(--primary); }
+  .input-group input, .input-group select { width: 100%; padding: 12px 14px; border: 1.5px solid #E0D9F0; border-radius: 10px; font-size: 15px; outline: none; transition: border .2s; background:#fff; }
+  .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
 
   /* ── 登录页 ── */
-  #page-login { padding-top: 60px; }
-  .login-logo { text-align: center; margin-bottom: 32px; }
-  .login-logo .emoji { font-size: 64px; }
+  #page-login { padding-top: 50px; }
+  .login-logo { text-align: center; margin-bottom: 28px; }
+  .login-logo .emoji { font-size: 60px; }
   .login-logo h1 { font-size: 22px; color: var(--primary); margin-top: 10px; font-weight: 700; }
   .login-logo p { font-size: 13px; color: var(--sub); margin-top: 6px; }
   .admin-entry { text-align: center; margin-top: 20px; font-size: 13px; color: var(--sub); cursor: pointer; }
   .admin-entry span { color: var(--primary); }
 
-  /* ── 星星月亮展示 ── */
-  .stars-display { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
-  .star-icon { font-size: 24px; }
-  .moon-icon { font-size: 28px; }
-
   /* ── 称号徽章 ── */
   .badge { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #7C5CBF, #A07FD9); color: #fff; border-radius: 20px; padding: 6px 14px; font-size: 14px; font-weight: 600; }
 
-  /* ── 进度条 ── */
-  .progress-bar { background: #EEE; border-radius: 8px; height: 10px; overflow: hidden; margin: 8px 0; }
-  .progress-fill { background: linear-gradient(90deg, var(--primary), var(--primary-light)); height: 100%; border-radius: 8px; transition: width .4s; }
-
   /* ── 周次打卡格子 ── */
   .weeks-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0; }
-  .week-cell { text-align: center; padding: 10px 6px; border-radius: 12px; border: 2px solid #E0D9F0; background: #FAF8FF; }
+  .week-cell { text-align: center; padding: 10px 6px; border-radius: 12px; border: 2px solid #E0D9F0; background: #FAF8FF; position: relative; }
   .week-cell.done { border-color: var(--star); background: #FFFBF0; }
-  .week-cell.done .wc-star { opacity: 1; }
+  .week-cell.locked { opacity: .45; background: #F5F5F5; }
+  .week-cell.current-week { border-color: var(--primary); }
   .week-cell .wc-label { font-size: 11px; color: var(--sub); margin-bottom: 4px; }
   .week-cell .wc-star { font-size: 22px; opacity: .25; }
+  .week-cell.done .wc-star { opacity: 1; }
+  .week-cell .wc-lock { font-size: 16px; opacity: .4; }
+  .current-week-label { font-size: 10px; color: var(--primary); font-weight: 700; margin-top: 3px; }
 
   /* ── 打卡区域 ── */
   .checkin-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
   .checkin-opt { border: 2px solid #E0D9F0; border-radius: 12px; padding: 16px 10px; text-align: center; cursor: pointer; background: #FAF8FF; transition: .15s; }
   .checkin-opt:active, .checkin-opt.selected { border-color: var(--primary); background: #F0EAFA; }
   .checkin-opt .co-icon { font-size: 30px; margin-bottom: 6px; }
-  .checkin-opt .co-label { font-size: 13px; color: var(--text); font-weight: 500; }
+  .checkin-opt .co-label { font-size: 13px; font-weight: 500; }
   .checkin-full { border: 2px solid #E0D9F0; border-radius: 12px; padding: 14px; text-align: center; cursor: pointer; background: #FAF8FF; margin-bottom: 14px; transition: .15s; }
   .checkin-full:active, .checkin-full.selected { border-color: var(--green); background: #F0FAF0; }
   #file-input { display: none; }
@@ -89,20 +84,69 @@
   #preview-video { max-width: 100%; border-radius: 10px; margin-bottom: 10px; display: none; }
 
   /* ── 排行榜 ── */
-  .rank-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F0EAF8; }
+  .rank-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid #F0EAF8; }
   .rank-item:last-child { border-bottom: none; }
-  .rank-num { width: 28px; height: 28px; border-radius: 50%; background: #EEE; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .rank-num { width: 28px; height: 28px; border-radius: 50%; background: #EEE; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
   .rank-num.r1 { background: #FFD700; color: #fff; }
   .rank-num.r2 { background: #C0C0C0; color: #fff; }
   .rank-num.r3 { background: #CD7F32; color: #fff; }
-  .rank-info { flex: 1; }
+  .rank-info { flex: 1; min-width: 0; }
   .rank-name { font-size: 15px; font-weight: 600; }
   .rank-score { font-size: 12px; color: var(--sub); margin-top: 2px; }
-  .rank-icons { font-size: 16px; }
-  .like-btn { background: none; border: 1.5px solid #E0D9F0; border-radius: 20px; padding: 4px 10px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: .15s; flex-shrink: 0; }
+  .rank-icons { font-size: 15px; margin-top: 4px; }
+  .rank-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+  .like-btn { background: none; border: 1.5px solid #E0D9F0; border-radius: 20px; padding: 4px 10px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: .15s; white-space: nowrap; }
   .like-btn.liked { border-color: var(--red); color: var(--red); background: #FFF0F0; }
+  .praise-btn { background: none; border: 1.5px solid #A07FD9; color: var(--primary); border-radius: 20px; padding: 4px 10px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  /* 表扬模板弹窗 */
+  .praise-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .praise-tag { background: #F0EAFA; border: 1.5px solid #D0C0F0; border-radius: 20px; padding: 7px 14px; font-size: 14px; cursor: pointer; transition: .15s; }
+  .praise-tag:active, .praise-tag.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+  /* 评论区 */
+  .comment-list { margin-top: 10px; }
+  .comment-item { font-size: 13px; background: #F8F4FF; border-radius: 8px; padding: 7px 11px; margin-bottom: 6px; line-height: 1.5; }
+  .comment-from { font-weight: 600; color: var(--primary); }
+
+  /* ── 消息通知 ── */
+  .msg-dot { display: inline-block; width: 8px; height: 8px; background: var(--red); border-radius: 50%; margin-left: 4px; vertical-align: middle; }
+  .msg-item { padding: 10px 0; border-bottom: 1px solid #F0EAF8; font-size: 13px; line-height: 1.6; }
+  .msg-item:last-child { border-bottom: none; }
+  .msg-from { color: var(--primary); font-weight: 600; }
+  .msg-time { color: var(--sub); font-size: 11px; }
 
   /* ── 老师端 ── */
+  .teacher-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+  .teacher-tab { flex: 1; padding: 10px; border: 2px solid #E0D9F0; border-radius: 10px; text-align: center; font-size: 14px; font-weight: 600; cursor: pointer; background: #fff; color: var(--sub); transition: .15s; }
+  .teacher-tab.active { border-color: var(--primary); color: var(--primary); background: #F0EAFA; }
+  .t-panel { display: none; }
+  .t-panel.active { display: block; }
+
+  /* 出勤看板 */
+  .week-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .week-nav-title { font-size: 16px; font-weight: 700; color: var(--primary); }
+  .week-nav-btn { background: none; border: 1.5px solid #E0D9F0; border-radius: 8px; padding: 5px 12px; cursor: pointer; font-size: 13px; }
+  .attendance-grid { display: grid; gap: 10px; }
+  .att-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: #FAF8FF; border: 1.5px solid #E0D9F0; }
+  .att-row.checked { border-color: var(--green); background: #F0FAF0; }
+  .att-row.unchecked { border-color: #FFCCCC; background: #FFF5F5; }
+  .att-name { flex: 1; font-size: 14px; font-weight: 600; }
+  .att-status { font-size: 12px; padding: 3px 9px; border-radius: 20px; font-weight: 600; }
+  .att-done { background: #E8F5E9; color: #2E7D32; }
+  .att-missing { background: #FFEBEE; color: #C62828; }
+  .att-streak { font-size: 12px; color: var(--sub); }
+  .remind-btn { font-size: 12px; background: #FF9800; color: #fff; border: none; border-radius: 8px; padding: 4px 10px; cursor: pointer; white-space: nowrap; }
+
+  /* 打卡明细 */
+  .detail-student { margin-bottom: 20px; }
+  .detail-student-name { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #F0EAF8; }
+  .detail-weeks { display: flex; flex-wrap: wrap; gap: 10px; }
+  .detail-week { text-align: center; }
+  .detail-week-label { font-size: 11px; color: var(--sub); margin-bottom: 4px; }
+  .detail-week-media { width: 72px; height: 72px; border-radius: 10px; object-fit: cover; border: 1.5px solid #E0D9F0; background: #FAF8FF; display: flex; align-items: center; justify-content: center; font-size: 24px; overflow: hidden; cursor: pointer; }
+  .detail-week-media img, .detail-week-media video { width: 100%; height: 100%; object-fit: cover; }
+  .detail-week-empty { width: 72px; height: 72px; border-radius: 10px; border: 1.5px dashed #D0C0F0; display: flex; align-items: center; justify-content: center; font-size: 22px; opacity: .35; }
+
+  /* 数据总览表格 */
   .teacher-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .teacher-table th { background: var(--bg); padding: 8px 6px; text-align: left; font-weight: 600; color: var(--sub); }
   .teacher-table td { padding: 8px 6px; border-bottom: 1px solid #F0EAF8; vertical-align: middle; }
@@ -112,32 +156,34 @@
   .star-count { min-width: 20px; text-align: center; font-weight: 600; }
 
   /* ── 底部Tab ── */
-  .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #EEE; display: flex; z-index: 100; max-width: 480px; margin: 0 auto; }
-  .tab-item { flex: 1; padding: 10px 0 8px; text-align: center; cursor: pointer; color: var(--sub); transition: .15s; }
+  .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #EEE; display: flex; z-index: 100; max-width: 520px; margin: 0 auto; }
+  .tab-item { flex: 1; padding: 10px 0 8px; text-align: center; cursor: pointer; color: var(--sub); transition: .15s; position: relative; }
   .tab-item.active { color: var(--primary); }
   .tab-item .ti-icon { font-size: 22px; }
   .tab-item .ti-label { font-size: 11px; margin-top: 2px; }
 
-  /* ── 提示Toast ── */
+  /* ── Toast ── */
   #toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(.9); background: rgba(0,0,0,.75); color: #fff; padding: 10px 20px; border-radius: 10px; font-size: 14px; opacity: 0; pointer-events: none; transition: .2s; z-index: 999; }
   #toast.show { opacity: 1; transform: translate(-50%,-50%) scale(1); }
 
   /* ── 弹窗 ── */
-  .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+  .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
   .modal-mask.show { display: flex; }
-  .modal-box { background: #fff; border-radius: 20px 20px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 480px; }
+  .modal-box { background: #fff; border-radius: 20px 20px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 520px; max-height: 80vh; overflow-y: auto; }
   .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 16px; }
+  .modal-close { float: right; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--sub); margin-top: -4px; }
 
-  /* ── 欢迎动画 ── */
-  @keyframes popIn { from { transform: scale(.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .pop-in { animation: popIn .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+  /* ── 媒体预览大图 ── */
+  #media-preview-mask { position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 500; display: none; align-items: center; justify-content: center; }
+  #media-preview-mask.show { display: flex; }
+  #media-preview-mask img, #media-preview-mask video { max-width: 95vw; max-height: 90vh; border-radius: 10px; }
 
   .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--primary); }
   .sub-text { font-size: 13px; color: var(--sub); line-height: 1.6; }
   .divider { height: 1px; background: #F0EAF8; margin: 14px 0; }
 
-  /* 当前周高亮 */
-  .current-week-label { font-size: 12px; color: var(--primary); font-weight: 600; margin-top: 4px; }
+  @keyframes popIn { from { transform: scale(.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .pop-in { animation: popIn .4s cubic-bezier(.34,1.56,.64,1) forwards; }
 </style>
 </head>
 <body>
@@ -160,6 +206,10 @@
   </div>
   <div class="card">
     <div class="input-group">
+      <label>班级码（老师提供）</label>
+      <input type="text" id="login-class" placeholder="请输入班级码，如 nana01">
+    </div>
+    <div class="input-group">
       <label>购课手机号</label>
       <input type="tel" id="login-phone" placeholder="请输入手机号" maxlength="11">
     </div>
@@ -167,14 +217,14 @@
       <label>孩子姓名</label>
       <input type="text" id="login-name" placeholder="请输入孩子姓名">
     </div>
-    <button class="btn btn-primary" onclick="doLogin()">进入我的阅读</button>
+    <button class="btn btn-primary" onclick="doLogin()">进入我的阅读 📖</button>
   </div>
   <div class="admin-entry" onclick="showAdminLogin()">老师入口 <span>→</span></div>
 </div>
 
 <!-- ══════════════ 学生主页 ══════════════ -->
 <div class="page" id="page-home">
-  <div class="card" style="background: linear-gradient(135deg,#7C5CBF,#A07FD9); color:#fff;">
+  <div class="card" style="background:linear-gradient(135deg,#7C5CBF,#A07FD9);color:#fff;">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
       <div style="font-size:40px;">🌟</div>
       <div>
@@ -207,40 +257,81 @@
     <div class="section-title">本周打卡</div>
     <div id="checkin-area"></div>
   </div>
+
+  <!-- 消息盒子 -->
+  <div class="card" id="msg-card" style="display:none;">
+    <div class="section-title">💌 收到的表扬</div>
+    <div id="msg-list"></div>
+  </div>
 </div>
 
 <!-- ══════════════ 排行榜页 ══════════════ -->
 <div class="page" id="page-rank">
   <div class="card">
-    <div class="section-title">🏆 排行榜</div>
-    <p class="sub-text" style="margin-bottom:12px;">星星+月亮最多的小读者</p>
+    <div class="section-title">🏆 班级排行榜</div>
+    <p class="sub-text" style="margin-bottom:12px;">星星+月亮越多，名次越高～</p>
     <div id="rank-list"></div>
   </div>
 </div>
 
 <!-- ══════════════ 老师端页 ══════════════ -->
 <div class="page" id="page-teacher">
-  <div class="card">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-      <div class="section-title" style="margin-bottom:0;">📋 学生数据</div>
-      <button class="btn btn-sm btn-outline" onclick="exportCSV()">导出CSV</button>
-    </div>
-    <div style="overflow-x:auto;">
-      <table class="teacher-table" id="teacher-table">
-        <thead>
-          <tr>
-            <th>姓名</th>
-            <th>手机号</th>
-            <th>⭐</th>
-            <th>调整</th>
-            <th>完成周</th>
-          </tr>
-        </thead>
-        <tbody id="teacher-tbody"></tbody>
-      </table>
+  <!-- 老师tab切换 -->
+  <div class="teacher-tab-bar">
+    <div class="teacher-tab active" id="ttab-attend" onclick="switchTeacherTab('attend')">📅 出勤看板</div>
+    <div class="teacher-tab" id="ttab-detail" onclick="switchTeacherTab('detail')">🖼️ 打卡明细</div>
+    <div class="teacher-tab" id="ttab-data" onclick="switchTeacherTab('data')">📊 数据总览</div>
+  </div>
+
+  <!-- 出勤看板 -->
+  <div class="t-panel active" id="t-panel-attend">
+    <div class="card">
+      <div class="week-nav">
+        <button class="week-nav-btn" onclick="attendWeekDelta(-1)">◀ 上周</button>
+        <div class="week-nav-title" id="attend-week-title">第1周</div>
+        <button class="week-nav-btn" onclick="attendWeekDelta(1)">下周 ▶</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+        <span id="attend-summary" style="font-size:13px;color:var(--sub);"></span>
+        <button class="btn-sm btn" style="background:#EEE;color:var(--text);font-weight:500;" onclick="batchRemind()">📣 一键提醒未打卡</button>
+      </div>
+      <div class="attendance-grid" id="attendance-grid"></div>
     </div>
   </div>
-  <div class="card">
+
+  <!-- 打卡明细 -->
+  <div class="t-panel" id="t-panel-detail">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:16px;">每位同学的打卡内容</div>
+      <div id="detail-list"></div>
+    </div>
+  </div>
+
+  <!-- 数据总览 -->
+  <div class="t-panel" id="t-panel-data">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div class="section-title" style="margin-bottom:0;">📋 学生数据</div>
+        <button class="btn btn-sm btn-outline" onclick="exportCSV()">导出CSV</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="teacher-table" id="teacher-table">
+          <thead>
+            <tr>
+              <th>姓名</th>
+              <th>手机号</th>
+              <th>⭐总数</th>
+              <th>调整</th>
+              <th>完成周</th>
+            </tr>
+          </thead>
+          <tbody id="teacher-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:8px;">
     <button class="btn btn-danger" onclick="adminLogout()">退出老师模式</button>
   </div>
 </div>
@@ -262,11 +353,47 @@
   <div class="modal-box">
     <div class="modal-title">🔐 老师入口</div>
     <div class="input-group">
-      <label>管理员密码</label>
+      <label>班级码（创建/进入班级）</label>
+      <input type="text" id="admin-class" placeholder="如 nana01">
+    </div>
+    <div class="input-group">
+      <label>老师密码</label>
       <input type="password" id="admin-pwd" placeholder="请输入密码">
     </div>
-    <button class="btn btn-primary" onclick="doAdminLogin()" style="margin-bottom:10px;">进入管理</button>
+    <button class="btn btn-primary" onclick="doAdminLogin()" style="margin-bottom:10px;">进入班级管理</button>
     <button class="btn btn-outline" onclick="closeAdminModal()">取消</button>
+    <p style="font-size:12px;color:var(--sub);margin-top:12px;line-height:1.7;">
+      💡 每位老师设置自己的班级码和密码<br>
+      首次输入即自动创建班级，下次用相同班级码+密码登录
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════ 表扬模板弹窗 ══════════════ -->
+<div class="modal-mask" id="praise-modal">
+  <div class="modal-box">
+    <div class="modal-title">🌟 送出表扬 <button class="modal-close" onclick="closePraiseModal()">✕</button></div>
+    <p class="sub-text" style="margin-bottom:12px;">选一条或点击输入自定义表扬：</p>
+    <div class="praise-tags" id="praise-tags-container"></div>
+    <div class="input-group" style="margin-top:12px;">
+      <label>或者自己写</label>
+      <input type="text" id="praise-custom" placeholder="最多20字" maxlength="20">
+    </div>
+    <button class="btn btn-primary" onclick="submitPraise()">发送 💌</button>
+  </div>
+</div>
+
+<!-- ══════════════ 媒体大图预览 ══════════════ -->
+<div id="media-preview-mask" onclick="this.classList.remove('show');this.innerHTML='';">
+</div>
+
+<!-- ══════════════ 提醒文案弹窗 ══════════════ -->
+<div class="modal-mask" id="remind-modal">
+  <div class="modal-box">
+    <div class="modal-title">📣 提醒话术 <button class="modal-close" onclick="document.getElementById('remind-modal').classList.remove('show')">✕</button></div>
+    <p class="sub-text" style="margin-bottom:10px;">复制后发给家长：</p>
+    <div id="remind-text" style="background:#F4F0FA;border-radius:10px;padding:14px;font-size:14px;line-height:1.8;"></div>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="copyRemindText()">复制话术</button>
   </div>
 </div>
 
@@ -275,94 +402,164 @@
 
 <script>
 // ══════════════════════════════════════════
-//  常量配置
+//  全局常量配置
 // ══════════════════════════════════════════
 const TOTAL_WEEKS = 8;
-const ADMIN_PASSWORD = 'nana2026';  // 老师密码，可修改
 const STARS_PER_MOON = 4;
 
-const TITLES = [
-  { min: 0,  title: '阅读新芽 🌱', emoji: '🌱' },
-  { min: 1,  title: '阅读小能手 ⭐', emoji: '⭐' },
-  { min: 3,  title: '故事小达人 📖', emoji: '📖' },
-  { min: 5,  title: '阅读小勇士 🗡️', emoji: '🗡️' },
-  { min: 6,  title: '故事小冠军 🏆', emoji: '🏆' },
-  { min: 8,  title: '阅读大明星 🌟', emoji: '🌟' },
-];
+// 班级码 → { adminPwd, startDate(YYYY-MM-DD), students:{} }
+// startDate：该班第1周开始日期，用于计算当前应解锁的周
+const KEY_CLASSES   = 'rci_classes';    // 所有班级数据
+const KEY_CURRENT   = 'rci_current';    // { classCode, phone, name }
+const KEY_IS_ADMIN  = 'rci_admin';      // classCode（老师当前管理的班级）
 
+const TITLES = [
+  { min: 0, title: '阅读新芽 🌱',     emoji: '🌱' },
+  { min: 1, title: '阅读小能手 ⭐',   emoji: '⭐' },
+  { min: 3, title: '故事小达人 📖',   emoji: '📖' },
+  { min: 5, title: '阅读小勇士 🗡️',   emoji: '🗡️' },
+  { min: 6, title: '故事小冠军 🏆',   emoji: '🏆' },
+  { min: 8, title: '阅读大明星 🌟',   emoji: '🌟' },
+];
 function getTitle(stars) {
   let t = TITLES[0];
   for (const item of TITLES) { if (stars >= item.min) t = item; }
   return t;
 }
 
-// ══════════════════════════════════════════
-//  数据层（localStorage）
-// ══════════════════════════════════════════
-const KEY_USERS = 'rci_users';       // { phone+name: { phone, name, stars, checkins:[], likes:{} } }
-const KEY_CURRENT = 'rci_current';   // { phone, name }
-const KEY_IS_ADMIN = 'rci_admin';    // bool
+const PRAISE_TEMPLATES = [
+  '真厉害！', '太棒了！', '你是阅读之星！', '坚持就是胜利！',
+  '进步明显！', '超级棒！', '为你骄傲！', '读书小达人！'
+];
 
-function getUsers() { return JSON.parse(localStorage.getItem(KEY_USERS) || '{}'); }
-function saveUsers(u) { localStorage.setItem(KEY_USERS, JSON.stringify(u)); }
+// ══════════════════════════════════════════
+//  数据层（localStorage 多班级）
+// ══════════════════════════════════════════
+function getAllClasses() {
+  return JSON.parse(localStorage.getItem(KEY_CLASSES) || '{}');
+}
+function saveAllClasses(d) {
+  localStorage.setItem(KEY_CLASSES, JSON.stringify(d));
+}
+function getClassData(code) {
+  return getAllClasses()[code] || null;
+}
+function ensureClass(code, adminPwd) {
+  const all = getAllClasses();
+  if (!all[code]) {
+    all[code] = { adminPwd, startDate: todayStr(), students: {} };
+    saveAllClasses(all);
+  }
+  return all[code];
+}
+function getStudentsOfClass(code) {
+  const c = getClassData(code);
+  return c ? c.students : {};
+}
 function userKey(phone, name) { return phone.trim() + '_' + name.trim(); }
 
-function getUser(phone, name) {
-  const users = getUsers();
-  return users[userKey(phone, name)] || null;
+function getStudentInClass(code, phone, name) {
+  const s = getStudentsOfClass(code);
+  return s[userKey(phone, name)] || null;
 }
-
-function upsertUser(phone, name) {
-  const users = getUsers();
+function upsertStudent(code, phone, name) {
+  const all = getAllClasses();
+  const cls = all[code];
+  if (!cls) return null;
   const k = userKey(phone, name);
-  if (!users[k]) {
-    users[k] = { phone: phone.trim(), name: name.trim(), stars: 0, checkins: [], likes: {} };
+  if (!cls.students[k]) {
+    cls.students[k] = {
+      phone: phone.trim(), name: name.trim(),
+      stars: 0, checkins: [], checkinMedia: {}, // checkinMedia: { week: {type, dataUrl} }
+      likedBy: {}, comments: [], // comments: [{from, text, ts}]
+      unreadComments: 0
+    };
   }
-  saveUsers(users);
-  return users[k];
+  saveAllClasses(all);
+  return cls.students[k];
 }
-
-function updateUser(phone, name, data) {
-  const users = getUsers();
+function updateStudentInClass(code, phone, name, data) {
+  const all = getAllClasses();
+  const cls = all[code];
+  if (!cls) return;
   const k = userKey(phone, name);
-  if (!users[k]) return;
-  Object.assign(users[k], data);
-  saveUsers(users);
+  if (!cls.students[k]) return;
+  Object.assign(cls.students[k], data);
+  saveAllClasses(all);
+}
+function saveStudentDirectly(code, phone, name, studentObj) {
+  const all = getAllClasses();
+  if (!all[code]) return;
+  all[code].students[userKey(phone, name)] = studentObj;
+  saveAllClasses(all);
 }
 
 function getCurrentUser() {
   const c = localStorage.getItem(KEY_CURRENT);
   if (!c) return null;
-  const { phone, name } = JSON.parse(c);
-  return getUser(phone, name) || null;
+  const { classCode, phone, name } = JSON.parse(c);
+  const s = getStudentInClass(classCode, phone, name);
+  return s ? { ...s, classCode } : null;
+}
+function setCurrentUser(classCode, phone, name) {
+  localStorage.setItem(KEY_CURRENT, JSON.stringify({ classCode, phone, name }));
+}
+function getCurrentClassCode() {
+  const c = localStorage.getItem(KEY_CURRENT);
+  if (!c) return null;
+  return JSON.parse(c).classCode;
 }
 
-function setCurrentUser(phone, name) {
-  localStorage.setItem(KEY_CURRENT, JSON.stringify({ phone, name }));
+// ── 日期工具 ──
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function daysBetween(a, b) {
+  return Math.floor((new Date(b) - new Date(a)) / 86400000);
+}
+// 根据班级开始日期计算当前解锁到第几周（自然周，每7天解锁1周）
+function getUnlockedWeeks(classCode) {
+  const cls = getClassData(classCode);
+  if (!cls || !cls.startDate) return 1;
+  const days = daysBetween(cls.startDate, todayStr());
+  return Math.min(Math.max(Math.floor(days / 7) + 1, 1), TOTAL_WEEKS);
+}
+// 当前应打卡的周（已解锁但尚未打卡的最小周，或最后未满的周）
+function getCurrentWeekForUser(classCode, phone, name) {
+  const s = getStudentInClass(classCode, phone, name);
+  if (!s) return 1;
+  const unlocked = getUnlockedWeeks(classCode);
+  for (let w = 1; w <= unlocked; w++) {
+    if (!(s.checkins || []).includes(w)) return w;
+  }
+  return unlocked;
 }
 
-// ══════════════════════════════════════════
-//  Toast
-// ══════════════════════════════════════════
+// ── Toast ──
 let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
 // ══════════════════════════════════════════
 //  登录
 // ══════════════════════════════════════════
 function doLogin() {
+  const code  = document.getElementById('login-class').value.trim().toLowerCase();
   const phone = document.getElementById('login-phone').value.trim();
-  const name = document.getElementById('login-name').value.trim();
+  const name  = document.getElementById('login-name').value.trim();
+  if (!code)  { showToast('请输入班级码'); return; }
   if (!/^1\d{10}$/.test(phone)) { showToast('请输入正确的手机号'); return; }
-  if (!name) { showToast('请输入孩子姓名'); return; }
-  upsertUser(phone, name);
-  setCurrentUser(phone, name);
+  if (!name)  { showToast('请输入孩子姓名'); return; }
+  const cls = getClassData(code);
+  if (!cls) { showToast('班级码不存在，请联系老师确认'); return; }
+  upsertStudent(code, phone, name);
+  setCurrentUser(code, phone, name);
   enterStudentMode();
 }
 
@@ -373,7 +570,17 @@ function enterStudentMode() {
   document.getElementById('main-nav').style.display = 'flex';
   document.getElementById('tab-bar').style.display = 'flex';
   document.getElementById('nav-user-info').textContent = u.name;
+  document.getElementById('nav-switch-btn').style.display = 'inline-block';
   switchTab('home');
+}
+
+function switchAccount() {
+  if (!confirm('确定要切换账号吗？\n（打卡数据已保存，不会丢失）')) return;
+  localStorage.removeItem(KEY_CURRENT);
+  document.getElementById('main-nav').style.display = 'none';
+  document.getElementById('tab-bar').style.display = 'none';
+  ['home','rank','teacher'].forEach(p => document.getElementById('page-'+p).classList.remove('active'));
+  document.getElementById('page-login').classList.add('active');
 }
 
 // ══════════════════════════════════════════
@@ -381,11 +588,11 @@ function enterStudentMode() {
 // ══════════════════════════════════════════
 function switchTab(tab) {
   ['home','rank'].forEach(t => {
-    document.getElementById('page-' + t).classList.remove('active');
-    document.getElementById('tab-' + t).classList.remove('active');
+    document.getElementById('page-'+t).classList.remove('active');
+    document.getElementById('tab-'+t).classList.remove('active');
   });
-  document.getElementById('page-' + tab).classList.add('active');
-  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('page-'+tab).classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
   if (tab === 'home') renderHome();
   if (tab === 'rank') renderRank();
 }
@@ -394,7 +601,10 @@ function switchTab(tab) {
 //  主页渲染
 // ══════════════════════════════════════════
 function renderHome() {
-  const u = getCurrentUser();
+  const raw = localStorage.getItem(KEY_CURRENT);
+  if (!raw) return;
+  const { classCode, phone, name } = JSON.parse(raw);
+  const u = getStudentInClass(classCode, phone, name);
   if (!u) return;
 
   const totalStars = u.stars;
@@ -402,8 +612,9 @@ function renderHome() {
   const remainStars = totalStars % STARS_PER_MOON;
   const weeksCount = (u.checkins || []).length;
   const title = getTitle(totalStars);
+  const unlocked = getUnlockedWeeks(classCode);
 
-  document.getElementById('home-name').textContent = u.name;
+  document.getElementById('home-name').textContent = name;
   document.getElementById('home-stars').textContent = remainStars;
   document.getElementById('home-moons').textContent = moons;
   document.getElementById('home-weeks').textContent = weeksCount + '/8';
@@ -414,26 +625,53 @@ function renderHome() {
   // 周格子
   const grid = document.getElementById('weeks-grid');
   grid.innerHTML = '';
+  const currentWeek = getCurrentWeekForUser(classCode, phone, name);
   for (let i = 1; i <= TOTAL_WEEKS; i++) {
-    const done = (u.checkins || []).includes(i);
-    const isCurrent = (i === getCurrentWeek());
+    const done    = (u.checkins || []).includes(i);
+    const locked  = i > unlocked;
+    const isCurr  = !locked && i === currentWeek && !done;
     const cell = document.createElement('div');
-    cell.className = 'week-cell' + (done ? ' done' : '');
-    cell.innerHTML = `<div class="wc-label">第${i}周</div><div class="wc-star">⭐</div>${isCurrent && !done ? '<div class="current-week-label">本周</div>' : ''}`;
+    cell.className = 'week-cell' + (done ? ' done' : '') + (locked ? ' locked' : '') + (isCurr ? ' current-week' : '');
+    cell.innerHTML = `<div class="wc-label">第${i}周</div>` +
+      (locked
+        ? `<div class="wc-lock">🔒</div>`
+        : `<div class="wc-star">⭐</div>`) +
+      (isCurr ? `<div class="current-week-label">本周</div>` : '');
     grid.appendChild(cell);
   }
 
   // 打卡区域
-  renderCheckinArea(u);
+  renderCheckinArea(classCode, phone, name, u, unlocked);
+
+  // 消息（表扬）
+  const comments = u.comments || [];
+  const msgCard = document.getElementById('msg-card');
+  const msgList = document.getElementById('msg-list');
+  if (comments.length) {
+    msgCard.style.display = 'block';
+    msgList.innerHTML = '';
+    comments.slice().reverse().slice(0, 10).forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'msg-item';
+      div.innerHTML = `<span class="msg-from">${escHtml(c.from)}</span> 说：${escHtml(c.text)}<br><span class="msg-time">${c.ts}</span>`;
+      msgList.appendChild(div);
+    });
+    // 清已读
+    if (u.unreadComments > 0) {
+      updateStudentInClass(classCode, phone, name, { unreadComments: 0 });
+      updateTabDot();
+    }
+  } else {
+    msgCard.style.display = 'none';
+  }
 }
 
-function getCurrentWeek() {
-  // 以第1次打卡时间为基准，或者返回1（首次）
-  // 简化：返回已完成周数+1，最大8
-  const u = getCurrentUser();
-  if (!u) return 1;
-  const done = (u.checkins || []).length;
-  return Math.min(done + 1, TOTAL_WEEKS);
+function updateTabDot() {
+  const raw = localStorage.getItem(KEY_CURRENT);
+  if (!raw) return;
+  const { classCode, phone, name } = JSON.parse(raw);
+  const u = getStudentInClass(classCode, phone, name);
+  // 仅更新 home tab 的小红点（可选增强）
 }
 
 // ══════════════════════════════════════════
@@ -442,18 +680,24 @@ function getCurrentWeek() {
 let selectedCheckinType = null;
 let selectedFile = null;
 
-function renderCheckinArea(u) {
-  const currentWeek = getCurrentWeek();
+function renderCheckinArea(classCode, phone, name, u, unlocked) {
+  const currentWeek = getCurrentWeekForUser(classCode, phone, name);
   const alreadyDone = (u.checkins || []).includes(currentWeek);
   const area = document.getElementById('checkin-area');
 
-  if (u.checkins && u.checkins.length >= TOTAL_WEEKS) {
+  if ((u.checkins || []).length >= TOTAL_WEEKS) {
     area.innerHTML = `<div style="text-align:center;padding:20px;"><div style="font-size:48px;">🎉</div><div style="font-size:16px;font-weight:700;color:var(--primary);margin-top:8px;">8周全部完成！</div><div class="sub-text" style="margin-top:6px;">你是真正的阅读大明星！</div></div>`;
     return;
   }
-
+  if (currentWeek > unlocked) {
+    const next = new Date();
+    next.setDate(next.getDate() + (7 - next.getDay() % 7));
+    area.innerHTML = `<div style="text-align:center;padding:16px;color:var(--sub);"><div style="font-size:32px;">🔒</div><div style="font-size:14px;margin-top:8px;">第${currentWeek}周还未解锁<br>下周一开始打卡</div></div>`;
+    return;
+  }
   if (alreadyDone) {
-    area.innerHTML = `<div style="text-align:center;padding:16px;"><div style="font-size:36px;">✅</div><div style="font-size:15px;font-weight:600;color:var(--green);margin-top:8px;">第${currentWeek}周已打卡！</div><div class="sub-text" style="margin-top:6px;">下周继续加油 💪</div></div>`;
+    const hasMore = unlocked > currentWeek;
+    area.innerHTML = `<div style="text-align:center;padding:16px;"><div style="font-size:36px;">✅</div><div style="font-size:15px;font-weight:600;color:var(--green);margin-top:8px;">第${currentWeek}周已打卡！</div><div class="sub-text" style="margin-top:6px;">${hasMore ? '还有未打卡的周，往前翻格子～' : '下周继续加油 💪'}</div></div>`;
     return;
   }
 
@@ -474,8 +718,8 @@ function renderCheckinArea(u) {
       <div style="font-size:14px;font-weight:500;margin-top:4px;">直接勾选：本周读书已完成</div>
     </div>
     <input type="file" id="file-input" accept="image/*,video/*" onchange="onFileSelected(this)">
-    <img id="preview-img" src="" alt="">
-    <video id="preview-video" controls></video>
+    <img id="preview-img" src="" alt="" style="display:none;max-width:100%;border-radius:10px;margin-bottom:10px;">
+    <video id="preview-video" controls style="display:none;max-width:100%;border-radius:10px;margin-bottom:10px;"></video>
     <button class="btn btn-primary" onclick="submitCheckin()">提交打卡 ⭐</button>
   `;
   selectedCheckinType = null;
@@ -490,12 +734,10 @@ function selectCheckinType(type) {
   });
   if (type === 'photo') {
     const fi = document.getElementById('file-input');
-    fi.accept = 'image/*';
-    fi.click();
+    fi.accept = 'image/*'; fi.click();
   } else if (type === 'video') {
     const fi = document.getElementById('file-input');
-    fi.accept = 'video/*';
-    fi.click();
+    fi.accept = 'video/*'; fi.click();
   }
 }
 
@@ -507,13 +749,8 @@ function onFileSelected(input) {
   const imgEl = document.getElementById('preview-img');
   const vidEl = document.getElementById('preview-video');
   const url = URL.createObjectURL(file);
-  if (isImage) {
-    imgEl.src = url; imgEl.style.display = 'block';
-    vidEl.style.display = 'none';
-  } else {
-    vidEl.src = url; vidEl.style.display = 'block';
-    imgEl.style.display = 'none';
-  }
+  if (isImage) { imgEl.src = url; imgEl.style.display = 'block'; vidEl.style.display = 'none'; }
+  else         { vidEl.src = url; vidEl.style.display = 'block'; imgEl.style.display = 'none'; }
 }
 
 function submitCheckin() {
@@ -521,38 +758,70 @@ function submitCheckin() {
   if ((selectedCheckinType === 'photo' || selectedCheckinType === 'video') && !selectedFile) {
     showToast('请先选择文件'); return;
   }
-  const u = getCurrentUser();
+  const raw = localStorage.getItem(KEY_CURRENT);
+  if (!raw) return;
+  const { classCode, phone, name } = JSON.parse(raw);
+  const u = getStudentInClass(classCode, phone, name);
   if (!u) return;
-  const week = getCurrentWeek();
+  const week = getCurrentWeekForUser(classCode, phone, name);
   const checkins = u.checkins || [];
   if (checkins.includes(week)) { showToast('本周已打卡'); return; }
-  checkins.push(week);
-  const newStars = u.stars + 1;
-  updateUser(u.phone, u.name, { checkins, stars: newStars });
-  showToast('🎉 打卡成功！获得一颗⭐');
-  setTimeout(() => renderHome(), 500);
+
+  const finalize = (mediaObj) => {
+    checkins.push(week);
+    const newStars = u.stars + 1;
+    const checkinMedia = u.checkinMedia || {};
+    if (mediaObj) checkinMedia[week] = mediaObj;
+    updateStudentInClass(classCode, phone, name, { checkins, stars: newStars, checkinMedia });
+    showToast('🎉 打卡成功！获得一颗⭐');
+    setTimeout(() => renderHome(), 500);
+  };
+
+  if (selectedCheckinType === 'tick') {
+    finalize(null);
+  } else {
+    // 把文件读成 dataURL 存本地（小图片可以，视频文件较大会占存储，给出提示）
+    const file = selectedFile;
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('文件较大，仅记录打卡，不保存预览');
+      finalize(null);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = e => finalize({ type: file.type.startsWith('image/') ? 'image' : 'video', dataUrl: e.target.result });
+    reader.readAsDataURL(file);
+  }
 }
 
 // ══════════════════════════════════════════
-//  排行榜
+//  排行榜 + 表扬
 // ══════════════════════════════════════════
-function renderRank() {
-  const u = getCurrentUser();
-  const users = getUsers();
-  const list = Object.values(users).sort((a, b) => b.stars - a.stars);
-  const container = document.getElementById('rank-list');
-  if (!list.length) { container.innerHTML = '<p class="sub-text" style="text-align:center;padding:20px;">暂无数据</p>'; return; }
+let praiseTarget = null; // { classCode, phone, name }
 
+function renderRank() {
+  const raw = localStorage.getItem(KEY_CURRENT);
+  if (!raw) return;
+  const { classCode, phone: myPhone, name: myName } = JSON.parse(raw);
+  const students = getStudentsOfClass(classCode);
+  const list = Object.values(students).sort((a, b) => b.stars - a.stars);
+  const container = document.getElementById('rank-list');
+
+  if (!list.length) {
+    container.innerHTML = '<p class="sub-text" style="text-align:center;padding:20px;">暂无同学数据</p>';
+    return;
+  }
   container.innerHTML = '';
   list.forEach((item, idx) => {
     const rank = idx + 1;
     const moons = Math.floor(item.stars / STARS_PER_MOON);
     const stars = item.stars % STARS_PER_MOON;
     const title = getTitle(item.stars);
-    const isSelf = u && item.phone === u.phone && item.name === u.name;
-    const likedKey = `${item.phone}_${item.name}`;
-    const likedByMe = u ? !!(u.likes && u.likes[likedKey]) : false;
+    const isSelf = item.phone === myPhone && item.name === myName;
+    const likedByMeKey = userKey(myPhone, myName);
+    const likedByMe = item.likedBy && item.likedBy[likedByMeKey];
     const likeCount = item.likedBy ? Object.keys(item.likedBy).length : 0;
+    const commentCount = (item.comments || []).length;
+    const likedKey = userKey(item.phone, item.name);
 
     const div = document.createElement('div');
     div.className = 'rank-item';
@@ -560,45 +829,98 @@ function renderRank() {
     div.innerHTML = `
       <div class="rank-num ${rank===1?'r1':rank===2?'r2':rank===3?'r3':''}">${rank}</div>
       <div class="rank-info">
-        <div class="rank-name">${item.name} ${isSelf ? '<span style="font-size:11px;color:var(--primary);">(我)</span>' : ''}</div>
+        <div class="rank-name">${escHtml(item.name)} ${isSelf ? '<span style="font-size:11px;color:var(--primary);">(我)</span>' : ''}</div>
         <div class="rank-score">${title.emoji} ${title.title}</div>
         <div class="rank-icons" style="margin-top:4px;">${'🌙'.repeat(moons)}${'⭐'.repeat(stars)}</div>
+        ${commentCount ? `<div style="font-size:12px;color:var(--sub);margin-top:4px;">💌 ${commentCount}条表扬</div>` : ''}
       </div>
-      <button class="like-btn ${likedByMe ? 'liked' : ''}" onclick="toggleLike('${item.phone}','${item.name}')">
-        ❤️ <span id="lc-${likedKey}">${likeCount}</span>
-      </button>
+      <div class="rank-actions">
+        <button class="like-btn ${likedByMe ? 'liked' : ''}" onclick="toggleLike('${item.phone}','${escAttr(item.name)}')">
+          ❤️ <span id="lc-${likedKey}">${likeCount}</span>
+        </button>
+        ${!isSelf ? `<button class="praise-btn" onclick="openPraise('${item.phone}','${escAttr(item.name)}')">🌟 表扬</button>` : ''}
+      </div>
     `;
     container.appendChild(div);
   });
 }
 
 function toggleLike(targetPhone, targetName) {
-  const u = getCurrentUser();
-  if (!u) { showToast('请先登录'); return; }
-  if (u.phone === targetPhone && u.name === targetName) { showToast('不能给自己点赞哦'); return; }
+  const raw = localStorage.getItem(KEY_CURRENT);
+  if (!raw) { showToast('请先登录'); return; }
+  const { classCode, phone: myPhone, name: myName } = JSON.parse(raw);
+  if (myPhone === targetPhone && myName === targetName) { showToast('不能给自己点赞哦'); return; }
 
-  const users = getUsers();
-  const myKey = userKey(u.phone, u.name);
-  const targetKey = userKey(targetPhone, targetName);
-
-  const me = users[myKey];
-  const target = users[targetKey];
+  const all = getAllClasses();
+  const cls = all[classCode];
+  if (!cls) return;
+  const me = cls.students[userKey(myPhone, myName)];
+  const target = cls.students[userKey(targetPhone, targetName)];
   if (!me || !target) return;
 
-  if (!me.likes) me.likes = {};
+  const myLikedKey = userKey(targetPhone, targetName);
+  const theirKey   = userKey(myPhone, myName);
   if (!target.likedBy) target.likedBy = {};
 
-  const likedKey = `${targetPhone}_${targetName}`;
-  if (me.likes[likedKey]) {
-    delete me.likes[likedKey];
-    delete target.likedBy[myKey];
+  if (target.likedBy[theirKey]) {
+    delete target.likedBy[theirKey];
     showToast('已取消点赞');
   } else {
-    me.likes[likedKey] = 1;
-    target.likedBy[myKey] = 1;
+    target.likedBy[theirKey] = 1;
     showToast('❤️ 点赞成功！');
   }
-  saveUsers(users);
+  saveAllClasses(all);
+  renderRank();
+}
+
+function openPraise(phone, name) {
+  const raw = localStorage.getItem(KEY_CURRENT);
+  if (!raw) return;
+  const { classCode } = JSON.parse(raw);
+  praiseTarget = { classCode, phone, name };
+  const container = document.getElementById('praise-tags-container');
+  container.innerHTML = '';
+  PRAISE_TEMPLATES.forEach(tpl => {
+    const span = document.createElement('span');
+    span.className = 'praise-tag';
+    span.textContent = tpl;
+    span.onclick = () => {
+      container.querySelectorAll('.praise-tag').forEach(s => s.classList.remove('selected'));
+      span.classList.add('selected');
+      document.getElementById('praise-custom').value = '';
+    };
+    container.appendChild(span);
+  });
+  document.getElementById('praise-custom').value = '';
+  document.getElementById('praise-modal').classList.add('show');
+}
+function closePraiseModal() {
+  document.getElementById('praise-modal').classList.remove('show');
+  praiseTarget = null;
+}
+function submitPraise() {
+  if (!praiseTarget) return;
+  const raw = localStorage.getItem(KEY_CURRENT);
+  if (!raw) return;
+  const { classCode, name: myName } = JSON.parse(raw);
+
+  const selected = document.querySelector('#praise-tags-container .praise-tag.selected');
+  const custom   = document.getElementById('praise-custom').value.trim();
+  const text = custom || (selected ? selected.textContent : '');
+  if (!text) { showToast('请选择或输入表扬内容'); return; }
+
+  const all = getAllClasses();
+  const cls = all[classCode];
+  if (!cls) return;
+  const k = userKey(praiseTarget.phone, praiseTarget.name);
+  if (!cls.students[k]) return;
+  if (!cls.students[k].comments) cls.students[k].comments = [];
+  cls.students[k].comments.push({ from: myName, text, ts: fmtTime(new Date()) });
+  cls.students[k].unreadComments = (cls.students[k].unreadComments || 0) + 1;
+  saveAllClasses(all);
+
+  showToast('💌 表扬发送成功！');
+  closePraiseModal();
   renderRank();
 }
 
@@ -608,116 +930,264 @@ function toggleLike(targetPhone, targetName) {
 function showAdminLogin() {
   document.getElementById('admin-modal').classList.add('show');
   document.getElementById('admin-pwd').value = '';
+  document.getElementById('admin-class').value = '';
 }
 function closeAdminModal() {
   document.getElementById('admin-modal').classList.remove('show');
 }
 function doAdminLogin() {
-  const pwd = document.getElementById('admin-pwd').value;
-  if (pwd !== ADMIN_PASSWORD) { showToast('密码错误'); return; }
-  localStorage.setItem(KEY_IS_ADMIN, '1');
+  const code = document.getElementById('admin-class').value.trim().toLowerCase();
+  const pwd  = document.getElementById('admin-pwd').value;
+  if (!code) { showToast('请输入班级码'); return; }
+  if (!pwd)  { showToast('请输入密码'); return; }
+
+  const existing = getClassData(code);
+  if (existing) {
+    if (existing.adminPwd !== pwd) { showToast('密码错误'); return; }
+  } else {
+    // 首次创建班级
+    ensureClass(code, pwd);
+    showToast(`班级 "${code}" 创建成功！`);
+  }
+  localStorage.setItem(KEY_IS_ADMIN, code);
   closeAdminModal();
   enterTeacherMode();
 }
+
+let currentAdminClass = '';
+let attendViewWeek = 1;
+
 function enterTeacherMode() {
+  currentAdminClass = localStorage.getItem(KEY_IS_ADMIN) || '';
   document.getElementById('page-login').classList.remove('active');
   document.getElementById('main-nav').style.display = 'flex';
-  document.getElementById('nav-user-info').textContent = '老师模式';
+  document.getElementById('nav-user-info').textContent = `老师·${currentAdminClass}`;
+  document.getElementById('nav-switch-btn').style.display = 'none';
   document.getElementById('tab-bar').style.display = 'none';
-  document.getElementById('page-home').classList.remove('active');
-  document.getElementById('page-rank').classList.remove('active');
+  ['home','rank'].forEach(p => document.getElementById('page-'+p).classList.remove('active'));
   document.getElementById('page-teacher').classList.add('active');
-  renderTeacherTable();
-}
-function switchAccount() {
-  if (!confirm('确定要切换账号吗？\n（当前打卡数据已保存，不会丢失）')) return;
-  localStorage.removeItem(KEY_CURRENT);
-  // 隐藏主界面，回到登录页
-  document.getElementById('main-nav').style.display = 'none';
-  document.getElementById('tab-bar').style.display = 'none';
-  ['home','rank','teacher'].forEach(p => {
-    document.getElementById('page-' + p).classList.remove('active');
-  });
-  document.getElementById('page-login').classList.add('active');
-}
-function adminLogout() {
-  localStorage.removeItem(KEY_IS_ADMIN);
-  document.getElementById('main-nav').style.display = 'none';
-  document.getElementById('page-teacher').classList.remove('active');
-  document.getElementById('page-login').classList.add('active');
+  attendViewWeek = getUnlockedWeeks(currentAdminClass);
+  switchTeacherTab('attend');
 }
 
+function switchTeacherTab(tab) {
+  ['attend','detail','data'].forEach(t => {
+    document.getElementById('ttab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('t-panel-'+t).classList.toggle('active', t===tab);
+  });
+  if (tab === 'attend') renderAttendance();
+  if (tab === 'detail') renderDetail();
+  if (tab === 'data')   renderTeacherTable();
+}
+
+// ── 出勤看板 ──
+function attendWeekDelta(d) {
+  const max = getUnlockedWeeks(currentAdminClass);
+  attendViewWeek = Math.max(1, Math.min(max, attendViewWeek + d));
+  renderAttendance();
+}
+
+function renderAttendance() {
+  const w = attendViewWeek;
+  document.getElementById('attend-week-title').textContent = `第${w}周出勤`;
+  const students = Object.values(getStudentsOfClass(currentAdminClass));
+  const grid = document.getElementById('attendance-grid');
+  grid.innerHTML = '';
+
+  let doneCount = 0;
+  students.forEach(s => {
+    const done = (s.checkins || []).includes(w);
+    if (done) doneCount++;
+    // 连续打卡天数（连续几周）
+    let streak = 0;
+    for (let i = w; i >= 1; i--) {
+      if ((s.checkins || []).includes(i)) streak++; else break;
+    }
+    const row = document.createElement('div');
+    row.className = 'att-row ' + (done ? 'checked' : 'unchecked');
+    row.innerHTML = `
+      <div class="att-name">${escHtml(s.name)}</div>
+      ${done
+        ? `<span class="att-status att-done">已打卡 ✅</span>`
+        : `<span class="att-status att-missing">未打卡</span>`
+      }
+      ${streak > 1 ? `<span class="att-streak">🔥×${streak}</span>` : ''}
+      ${!done ? `<button class="remind-btn" onclick="showRemind('${escAttr(s.name)}')">提醒</button>` : ''}
+    `;
+    grid.appendChild(row);
+  });
+
+  const total = students.length;
+  document.getElementById('attend-summary').textContent =
+    total ? `已打卡 ${doneCount}/${total} 人` : '暂无学生';
+}
+
+function showRemind(name) {
+  const text = `${name}同学/家长好！本周的阅读打卡还没有记录到哦～坚持阅读每一周都算数，每完成一周就能点亮一颗⭐，加油！打卡链接：https://nana-xueersi.github.io/reading-checkin/`;
+  document.getElementById('remind-text').textContent = text;
+  document.getElementById('remind-modal').classList.add('show');
+}
+
+function batchRemind() {
+  const w = attendViewWeek;
+  const students = Object.values(getStudentsOfClass(currentAdminClass));
+  const missing = students.filter(s => !(s.checkins || []).includes(w)).map(s => s.name);
+  if (!missing.length) { showToast('本周所有同学都已打卡 🎉'); return; }
+  const names = missing.join('、');
+  const text = `【阅读打卡提醒】${names}，本周的阅读打卡还没完成哦～快来打卡点亮星星吧！打卡链接：https://nana-xueersi.github.io/reading-checkin/`;
+  document.getElementById('remind-text').textContent = text;
+  document.getElementById('remind-modal').classList.add('show');
+}
+
+function copyRemindText() {
+  const text = document.getElementById('remind-text').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('已复制！'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); showToast('已复制！');
+  }
+}
+
+// ── 打卡明细 ──
+function renderDetail() {
+  const students = Object.values(getStudentsOfClass(currentAdminClass)).sort((a,b) => a.name.localeCompare(b.name,'zh'));
+  const container = document.getElementById('detail-list');
+  container.innerHTML = '';
+  if (!students.length) {
+    container.innerHTML = '<p class="sub-text" style="text-align:center;padding:20px;">暂无学生</p>';
+    return;
+  }
+  students.forEach(s => {
+    const block = document.createElement('div');
+    block.className = 'detail-student';
+    const checkins = s.checkins || [];
+    const media = s.checkinMedia || {};
+    let weeksHtml = '';
+    for (let w = 1; w <= TOTAL_WEEKS; w++) {
+      const done = checkins.includes(w);
+      const m = media[w];
+      weeksHtml += `<div class="detail-week">
+        <div class="detail-week-label">第${w}周</div>`;
+      if (done && m && m.type === 'image') {
+        weeksHtml += `<div class="detail-week-media" onclick="previewMedia('image','${m.dataUrl}')"><img src="${m.dataUrl}"></div>`;
+      } else if (done && m && m.type === 'video') {
+        weeksHtml += `<div class="detail-week-media" onclick="previewMedia('video','${m.dataUrl}')"><video src="${m.dataUrl}" muted playsinline></video><div style="position:absolute;font-size:20px;">▶</div></div>`;
+      } else if (done) {
+        weeksHtml += `<div class="detail-week-media" style="background:#F0FAF0;border-color:var(--green);">✅</div>`;
+      } else {
+        weeksHtml += `<div class="detail-week-empty">·</div>`;
+      }
+      weeksHtml += `</div>`;
+    }
+    block.innerHTML = `
+      <div class="detail-student-name">${escHtml(s.name)} <span style="font-size:12px;color:var(--sub);font-weight:400;">已完成${checkins.length}/8周 · ⭐${s.stars}</span></div>
+      <div class="detail-weeks" style="position:relative;">${weeksHtml}</div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+function previewMedia(type, src) {
+  const mask = document.getElementById('media-preview-mask');
+  if (type === 'image') {
+    mask.innerHTML = `<img src="${src}" onclick="event.stopPropagation()">`;
+  } else {
+    mask.innerHTML = `<video src="${src}" controls autoplay style="max-width:95vw;max-height:90vh;border-radius:10px;" onclick="event.stopPropagation()"></video>`;
+  }
+  mask.classList.add('show');
+}
+
+// ── 数据总览 ──
 function renderTeacherTable() {
-  const users = getUsers();
-  const list = Object.values(users).sort((a, b) => b.stars - a.stars);
+  const students = Object.values(getStudentsOfClass(currentAdminClass)).sort((a,b) => b.stars - a.stars);
   const tbody = document.getElementById('teacher-tbody');
   tbody.innerHTML = '';
-  if (!list.length) {
+  if (!students.length) {
     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--sub);">暂无学生数据</td></tr>';
     return;
   }
-  list.forEach(item => {
+  students.forEach(s => {
     const tr = document.createElement('tr');
-    const weeksCount = (item.checkins || []).length;
     tr.innerHTML = `
-      <td><strong>${item.name}</strong></td>
-      <td style="color:var(--sub);font-size:12px;">${item.phone}</td>
-      <td><span style="font-weight:700;color:var(--primary);">${item.stars}</span></td>
+      <td><strong>${escHtml(s.name)}</strong></td>
+      <td style="color:var(--sub);font-size:12px;">${s.phone}</td>
+      <td><span style="font-weight:700;color:var(--primary);">${s.stars}</span></td>
       <td>
         <div class="star-adj">
-          <button class="adj-btn" onclick="adjustStar('${item.phone}','${item.name}',-1)">−</button>
-          <span class="star-count">${item.stars}</span>
-          <button class="adj-btn" onclick="adjustStar('${item.phone}','${item.name}',1)">+</button>
+          <button class="adj-btn" onclick="adjustStar('${s.phone}','${escAttr(s.name)}',-1)">−</button>
+          <span class="star-count">${s.stars}</span>
+          <button class="adj-btn" onclick="adjustStar('${s.phone}','${escAttr(s.name)}',1)">+</button>
         </div>
       </td>
-      <td>${weeksCount}/8</td>
+      <td>${(s.checkins||[]).length}/8</td>
     `;
     tbody.appendChild(tr);
   });
 }
 
 function adjustStar(phone, name, delta) {
-  const users = getUsers();
+  const all = getAllClasses();
+  const cls = all[currentAdminClass];
+  if (!cls) return;
   const k = userKey(phone, name);
-  if (!users[k]) return;
-  users[k].stars = Math.max(0, (users[k].stars || 0) + delta);
-  saveUsers(users);
+  if (!cls.students[k]) return;
+  cls.students[k].stars = Math.max(0, (cls.students[k].stars || 0) + delta);
+  saveAllClasses(all);
   renderTeacherTable();
 }
 
 function exportCSV() {
-  const users = getUsers();
-  const list = Object.values(users);
-  if (!list.length) { showToast('暂无数据'); return; }
-  const header = ['姓名','手机号','星星数','完成周数','称号'];
-  const rows = list.map(u => [
-    u.name, u.phone, u.stars,
-    (u.checkins || []).length,
-    getTitle(u.stars).title
+  const students = Object.values(getStudentsOfClass(currentAdminClass));
+  if (!students.length) { showToast('暂无数据'); return; }
+  const header = ['姓名','手机号','星星数','月亮数','完成周数','称号'];
+  const rows = students.map(s => [
+    s.name, s.phone, s.stars,
+    Math.floor(s.stars / STARS_PER_MOON),
+    (s.checkins||[]).length,
+    getTitle(s.stars).title
   ]);
-  const csv = [header, ...rows].map(r => r.join(',')).join('\n');
-  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const csv = [header,...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = '阅读打卡数据.csv'; a.click();
+  a.href=url; a.download=`阅读打卡_${currentAdminClass}.csv`; a.click();
   URL.revokeObjectURL(url);
 }
 
+function adminLogout() {
+  localStorage.removeItem(KEY_IS_ADMIN);
+  currentAdminClass = '';
+  document.getElementById('main-nav').style.display = 'none';
+  document.getElementById('page-teacher').classList.remove('active');
+  document.getElementById('page-login').classList.add('active');
+}
+
 // ══════════════════════════════════════════
-//  初始化：自动登录
+//  工具函数
+// ══════════════════════════════════════════
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  return String(s).replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+}
+function fmtTime(d) {
+  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+// ══════════════════════════════════════════
+//  初始化
 // ══════════════════════════════════════════
 window.onload = function () {
-  // 老师模式
-  if (localStorage.getItem(KEY_IS_ADMIN)) {
-    enterTeacherMode(); return;
-  }
-  // 学生模式
+  const adminClass = localStorage.getItem(KEY_IS_ADMIN);
+  if (adminClass) { enterTeacherMode(); return; }
   const c = localStorage.getItem(KEY_CURRENT);
   if (c) {
-    const { phone, name } = JSON.parse(c);
-    if (getUser(phone, name)) { enterStudentMode(); return; }
+    const { classCode, phone, name } = JSON.parse(c);
+    if (getStudentInClass(classCode, phone, name)) { enterStudentMode(); return; }
   }
-  // 未登录
 };
 </script>
 </body>
