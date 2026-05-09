@@ -557,7 +557,10 @@ function doLogin() {
   if (!/^1\d{10}$/.test(phone)) { showToast('请输入正确的手机号'); return; }
   if (!name)  { showToast('请输入孩子姓名'); return; }
   const cls = getClassData(code);
-  if (!cls) { showToast('班级码不存在，请联系老师确认'); return; }
+  if (!cls) {
+    // 学生先进入：自动创建班级（startDate=今天）
+    ensureClass(code, '');
+  }
   upsertStudent(code, phone, name);
   setCurrentUser(code, phone, name);
   enterStudentMode();
